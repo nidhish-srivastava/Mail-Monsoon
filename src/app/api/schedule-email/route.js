@@ -1,12 +1,13 @@
 import { connectmongodb } from "@/lib/dbConnect";
 import { EmailSchedule } from "@/models/EmailSchedule";
 import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
-export async function POST(req){
+export async function POST(req,res){
     const session = await getServerSession({ req });
 
     if (!session) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return NextResponse.json({message : "Unauthorized"},{status : 401})
     }
     await connectmongodb()
     const { userEmail, recipientEmail, subject, body, dayOfWeek, durationWeeks } = await req.json()
@@ -20,7 +21,7 @@ export async function POST(req){
             durationWeeks,
           });
           await emailSchedule.save();
-          res.status(201).json({ message: 'Email schedule saved successfully.' });
+          return NextResponse.json({message : "Email schedule saved successfully"},{status : 201})
     } catch (error) {
         console.error(error)
     }

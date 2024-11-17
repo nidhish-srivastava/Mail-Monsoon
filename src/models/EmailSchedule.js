@@ -11,6 +11,6 @@ const emailscheduleschema = new mongoose.Schema({
     weeksSent : {type : Number,default : 0}
 })
 
-const EmailSchedule = mongoose.model('EmailSchedule',emailscheduleschema)
+const EmailSchedule = mongoose.models.EmailSchedule || mongoose.model('EmailSchedule',emailscheduleschema)
 
 export {EmailSchedule}
