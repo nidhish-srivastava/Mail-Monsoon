@@ -1,13 +1,25 @@
-import { connect } from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+// lib/dbConnect.js
+import { MongoClient } from 'mongodb';
 
-export async function connectmongodb() {
-  try {
-    console.log("Connected to DB");
-    const connection = await connect(process.env.MONGO_DB_URI || "");
-    return connection;
-  } catch (error) {
-    console.log("Error connecting to DB");
-  }
+const uri = process.env.MONGO_DB_URI;
+
+
+let client;
+let clientPromise;
+
+if (!process.env.MONGO_DB_URI) {
+  throw new Error('Please add your Mongo URI to .env.local');
 }
+
+if (process.env.NODE_ENV === 'development') {
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri);
+    global._mongoClientPromise = client.connect();
+  }
+  clientPromise = global._mongoClientPromise;
+} else {
+  client = new MongoClient(uri);
+  clientPromise = client.connect();
+}
+
+export default clientPromise;

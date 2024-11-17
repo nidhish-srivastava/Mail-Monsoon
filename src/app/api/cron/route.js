@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
 });
 
 // Cron job is running everyday at midnight and checks in the db what all schedules are present then iterates over those schedules and sent mails if its the specified day by the user 
+// If we have 100 entries then 100 mails will be spent for that day,wudnt it be a load ? To Solve this problem we will send mails parallely using Promise.all 
 export async function GET() {
-    // If we have 100 entries then 100 mails will be spent for that day,wudnt it be a load ? To Solve this problem we will send mails parallely using Promise.all 
     const now = new Date()
     const dayOfWeek = now.getDay()
 
@@ -22,7 +22,7 @@ export async function GET() {
     const schedules = await EmailSchedule.find({
         dayOfWeek,
         startDate: { $lte: now },  // lte means less than equal to
-    });
+    })
     for (const schedule of schedules) {
         const { userEmail, recipientEmail, subject, body, durationOfWeeks, weeksSent } = schedule
         if (weeksSent < durationOfWeeks) {
@@ -38,7 +38,7 @@ export async function GET() {
                     if (error) {
                         console.error("Error sending mail", error)
                     } else {
-                        console.log("EMail sent", info.response);
+                        console.log("Email sent", info.response);
                         weeksSent += 1;
                         await schedule.save();
 
