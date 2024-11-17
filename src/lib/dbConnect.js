@@ -1,25 +1,20 @@
-// lib/dbConnect.js
-import { MongoClient } from 'mongodb';
+import { connect } from "mongoose";
 
-const uri = process.env.MONGO_DB_URI;
+let connection = null; // This will hold the singleton connection instance
 
-
-let client;
-let clientPromise;
-
-if (!process.env.MONGO_DB_URI) {
-  throw new Error('Please add your Mongo URI to .env.local');
-}
-
-if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri);
-    global._mongoClientPromise = client.connect();
+export async function connectmongodb() {
+  if (connection) {
+    console.log("Already connected to DB");
+    return connection; // Return the existing connection if it exists
   }
-  clientPromise = global._mongoClientPromise;
-} else {
-  client = new MongoClient(uri);
-  clientPromise = client.connect();
-}
 
-export default clientPromise;
+  try {
+    console.log("Connecting to DB");
+    connection = await connect(process.env.MONGO_DB_URI || "");
+    console.log("Connected to DB");
+    return connection;
+  } catch (error) {
+    console.error("Error connecting to DB", error);
+    throw error; // It's a good practice to rethrow the error so it can be handled by the caller
+  }
+}

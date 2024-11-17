@@ -1,15 +1,13 @@
-import SigninButton from "@/components/AuthButtons"
-import Link from "next/link"
+import Footer from "@/components/Footer"
+import Hero from "@/components/Hero"
+import Navbar from "@/components/Navbar"
 
 function Home() {
   return (
-    <div className="text-center mt-4 space-x-4 flex justify-center">
-      <Link href={`/`}>
-      </Link>
-      <Link href={`/schedule-email`}>
-      <button className="btn">Schedule Email</button>
-      </Link>
-      <SigninButton/>
+    <div className="w-[60%] mx-auto">
+      <Navbar />
+      <Hero />
+      <Footer/>
     </div>
   )
 }

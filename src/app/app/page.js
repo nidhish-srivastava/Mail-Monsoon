@@ -49,7 +49,7 @@ function Home() {
   return (
     <>
     <Link href={`/`}>
-    <button className="btn absolute left-4 top-2">Home</button>
+    <button className="btn absolute left-4 top-2 text-gray-200">Home</button>
     </Link>
       <div className="min-h-screen text-white flex items-center justify-center p-6">
         <form
@@ -156,7 +156,7 @@ function Home() {
             </label>
             <input type="file" id="attachment" name="attachment" className="hidden" />
           </div> */}
-          <button className="btn btn-primary w-full" type="submit">
+          <button className="btn btn-primary text-white w-full" type="submit">
             Submit
           </button>
           </div>   

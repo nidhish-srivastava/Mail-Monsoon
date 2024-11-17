@@ -14,16 +14,16 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "",
+  title: "🔮 Mail Monsoon",
   description: "",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="dark">
+    <html lang="en">
       <Providers>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} bg-[#2a303c] ${geistMono.variable} antialiased`}
         >
           {children}
         </body>
