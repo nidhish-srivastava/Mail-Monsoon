@@ -99,7 +99,7 @@ function Home() {
       <Link href={`/`}>
         <button className="btn absolute left-4 top-2 text-gray-200">Home</button>
       </Link>
-      <div className="min-h-screen text-white flex items-center justify-center p-6">
+      <div className="min-h-screen text-white flex items-center justify-center px-6 py-16 sm:py-6">
         <form
           onSubmit={submitFormHandler}
           className="w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-md"

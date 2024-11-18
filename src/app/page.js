@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar"
 
 function Home() {
   return (
-    <div className="w-[60%] mx-auto">
+    <div className="w-[80%] md:w-[60%] mx-auto">
       <Navbar />
       <Hero />
       <Footer/>
