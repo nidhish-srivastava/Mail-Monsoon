@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 function Home() {
   const { data: session } = useSession()
+  const [isSubmitting,setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     recipientEmail: "",
     weekDay: 1,
@@ -22,6 +23,7 @@ function Home() {
     numberOfWeeks: "",
     subject: "",
   })
+
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,6 +69,7 @@ function Home() {
       return;
     }
     try {
+      setIsSubmitting(true)
       const response = await fetch(`/api/schedule-email`, {
         method: "POST",
         headers: {
@@ -80,8 +83,10 @@ function Home() {
       } else {
         toast.error("Failed to schedule email.");
       }
+      setIsSubmitting(false)
     } catch (error) {
       toast.error("An error occurred while scheduling the email.");
+      setIsSubmitting(false)
     }
   };
 
@@ -215,7 +220,7 @@ function Home() {
             </label>
             <input type="file" id="attachment" name="attachment" className="hidden" />
           </div> */}
-            <button className="btn btn-primary text-white w-full" type="submit">
+            <button disabled={isSubmitting} className={`btn btn-primary text-white w-full disabled:bg-opacity-100 disabled:cursor-not-allowed`} type="submit">
               Submit
             </button>
           </div>
