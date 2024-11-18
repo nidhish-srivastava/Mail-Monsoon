@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
 import { connectmongodb } from "@/lib/dbConnect"
 import { EmailSchedule } from "@/models/EmailSchedule";
+import { NextResponse } from "next/server";
 
 // Create a transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
@@ -15,18 +16,19 @@ const transporter = nodemailer.createTransport({
 // If we have 100 entries then 100 mails will be spent for that day,wudnt it be a load ? To Solve this problem we will send mails parallely using Promise.all 
 export async function GET() {
     const now = new Date()
-    const dayOfWeek = now.getDay()
-
+    const weekDay = now.getDay()
+    
     await connectmongodb()
 
     const schedules = await EmailSchedule.find({
-        dayOfWeek,
-        startDate: { $lte: now },  // lte means less than equal to
+        weekDay,
+        createdAt: { $lte: now },  // lte means less than equal to
     })
+    
     for (const schedule of schedules) {
-        const { userEmail, recipientEmail, subject, body, durationOfWeeks, weeksSent } = schedule
-        if (weeksSent < durationOfWeeks) {
-            if (dayOfWeek == schedule.dayOfWeek) {
+        const { userEmail, recipientEmail, subject, body, numberOfWeeks, weeksSent } = schedule
+        if (weeksSent < numberOfWeeks) {
+            if (weekDay == schedule.weekDay) {
                 const mailOptions = {
                     from: userEmail,
                     to: recipientEmail,
@@ -39,7 +41,7 @@ export async function GET() {
                         console.error("Error sending mail", error)
                     } else {
                         console.log("Email sent", info.response);
-                        weeksSent += 1;
+                        schedule.weeksSent += 1;
                         await schedule.save();
 
                     }
@@ -50,4 +52,5 @@ export async function GET() {
             await EmailSchedule.deleteOne({ _id: schedule._id })
         }
     }
+    return NextResponse.json({status : 200})
 }

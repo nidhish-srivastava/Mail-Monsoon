@@ -3,22 +3,22 @@ import { EmailSchedule } from "@/models/EmailSchedule";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function POST(req,res){
+export async function POST(req){
     const session = await getServerSession({ req });
 
     if (!session) {
       return NextResponse.json({message : "Unauthorized"},{status : 401})
     }
     await connectmongodb()
-    const { userEmail, recipientEmail, subject, body, dayOfWeek, durationWeeks } = await req.json()
+    const { userEmail, recipientEmail, subject, body, weekDay,numberOfWeeks } = await req.json()
     try {
         const emailSchedule = new EmailSchedule({
             userEmail,
             recipientEmail,
             subject,
             body,
-            dayOfWeek,
-            durationWeeks,
+            weekDay,
+            numberOfWeeks,
           });
           await emailSchedule.save();
           return NextResponse.json({message : "Email schedule saved successfully"},{status : 201})

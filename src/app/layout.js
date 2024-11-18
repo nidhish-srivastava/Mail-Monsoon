@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "🔮 Mail Monsoon",
+  title: "Mail Monsoon",
   description: "",
 };
 

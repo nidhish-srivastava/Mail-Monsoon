@@ -9,16 +9,16 @@ import toast, { Toaster } from "react-hot-toast";
 function Home() {
   const [formData, setFormData] = useState({
     recipientEmail: "",
-    weekDay: "",
+    weekDay: 1,
     numberOfWeeks: 1,
     subject: "",
-    emailBody: "",
+    body: "",
   });
 
   const [errors, setErrors] = useState({
     recipientEmail: "",
     weekDay: "",
-    numberOfWeeks: null,
+    numberOfWeeks: "",
     subject: "",
   })
 
@@ -30,7 +30,7 @@ function Home() {
   const validInputCheckHandler = () => {
     const newErrors = {
       recipientEmail: "",
-      weekDay: "",
+      weekDay: null,
       numberOfWeeks: null,
       subject: "",
     }
@@ -39,7 +39,7 @@ function Home() {
       newErrors.recipientEmail = "Please enter a valid email address"
       isValid = false
     }
-    if (formData.weekDay == "") {
+    if (formData.weekDay == null) {
       newErrors.weekDay = "Plese select a day of the week"
       isValid = false
     }
@@ -91,7 +91,7 @@ function Home() {
 
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <Link href={`/`}>
         <button className="btn absolute left-4 top-2 text-gray-200">Home</button>
       </Link>
@@ -135,13 +135,13 @@ function Home() {
                 <option value="" disabled>
                   Select a day
                 </option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+                <option value="0">Sunday</option>
               </select>
               <p className="text-red-500">
                 {errors.weekDay}
@@ -188,21 +188,20 @@ function Home() {
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="emailBody" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="body" className="block text-sm font-medium text-gray-300">
                 Email Body
               </label>
               <textarea
                 className="textarea focus:outline-none textarea-bordered bg-gray-700 text-white border-gray-600 w-full"
-                id="emailBody"
-                name="emailBody"
-                value={formData.emailBody}
+                id="body"
+                name="body"
+                value={formData.body}
                 onChange={changeHandler}
                 placeholder="Write your email here"
                 rows="5"
                 required
               ></textarea>
             </div>
-
             {/* <div className="space-y-1">
             <label htmlFor="attachment" className="block text-sm font-medium text-gray-300">
               Attach File
