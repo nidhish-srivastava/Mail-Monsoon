@@ -1,10 +1,9 @@
-export default function robots() {
-  return {
-    rules: {
-      userAgent: '*',  // User agents are seearch engine inedxing bots like that of google,apple,bing bots so we allow all of them
-      allow: '/',
-      disallow: [],
+export default function sitemap() {
+  return [
+    {
+      url: "https://mail-monsoon.vercel.app",
+      lastModified: new Date(),
     },
-    sitemap: "https://mail-monsoon.vercel.app/sitemap.xml"
-  }
+    // What extra that i can do is seo the users as well so programmatically,fetch all users from db then put their Name in the url,last modified will be their time their account were created in db
+  ]
 }
