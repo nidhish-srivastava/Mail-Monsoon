@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "@/components/Provider";
-import { DOMAIN_URL } from "@/lib/util";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,7 +20,7 @@ export const metadata = {
   description: "Schedule emails and keep on sending them to increase your chances of getting a response",
   title: "Mail Monsoon",
   images  : ["https://asset.cloudinary.com/dvlz73wcr/b9910452274e5811fc7d672fbdf841fb"], // WHen we share link then we need a preview where some image is shown
-  url : `${DOMAIN_URL}`
+  url : "https://mail-monsoon.vercel.app"
   },
   keywords : ["spam","email","nextjs"]
 };
