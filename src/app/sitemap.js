@@ -1,5 +1,3 @@
-import { DOMAIN_URL } from "@/lib/util";
-
 export default function robots() {
   return {
     rules: {
@@ -7,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: [],
     },
-    sitemap: `${DOMAIN_URL}/sitemap.xml`,
+    sitemap: "https://mail-monsoon.vercel.app/sitemap.xml"
   }
 }
