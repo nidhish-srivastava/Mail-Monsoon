@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation'
 import heroanimation from "../assets/hero-animation.json"
 
 function Hero() {
-  const { data: session } = useSession()
+  const { status } = useSession()
   const router = useRouter()
   const navigateToAppPage = () => {
-    if (session && session.user) {
+    if(status == "loading") return;
+    if (status == "authenticated" ) {
       router.push("/app")
     } else {
       signIn("google", {

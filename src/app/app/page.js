@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 // import { MdAttachFile } from "react-icons/md";
 
 function Home() {
+  const { data: session } = useSession()
   const [formData, setFormData] = useState({
     recipientEmail: "",
     weekDay: 1,
@@ -35,6 +36,10 @@ function Home() {
       subject: "",
     }
     let isValid = true
+    if(formData.recipientEmail == session.user.email){
+      newErrors.recipientEmail = "You can't send mail to your own gmail account"
+      isValid = false
+    }
     if (!isValidEmail(formData.recipientEmail)) {
       newErrors.recipientEmail = "Please enter a valid email address"
       isValid = false
@@ -55,7 +60,6 @@ function Home() {
     return isValid
   }
 
-  const { data: session } = useSession()
 
   const submitFormHandler = async (e) => {
     e.preventDefault();

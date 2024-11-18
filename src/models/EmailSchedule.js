@@ -5,10 +5,11 @@ const emailscheduleschema = new mongoose.Schema({
     recipientEmail : String,
     subject : String,
     body : String,
-    dayOfWeek : Number,
-    durationOfWeeks : Number,
-    startDate : {type : Date,default : Date.now},
+    weekDay : Number,
+    numberOfWeeks : Number,
     weeksSent : {type : Number,default : 0}
+},{
+    timestamps : true
 })
 
 const EmailSchedule = mongoose.models.EmailSchedule || mongoose.model('EmailSchedule',emailscheduleschema)
