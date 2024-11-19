@@ -7,7 +7,8 @@ const emailscheduleschema = new mongoose.Schema({
     body : String,
     weekDay : Number,
     numberOfWeeks : Number,
-    weeksSent : {type : Number,default : 0}
+    weeksSent : {type : Number,default : 0},
+    files : [mongoose.Schema.Types.Mixed]
 },{
     timestamps : true
 })
