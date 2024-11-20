@@ -1,0 +1,1 @@
+## Note - Cron jobs aren't running cuz of vercel hobby plan so this project of no use at the moment. Need to figure out hosting 
